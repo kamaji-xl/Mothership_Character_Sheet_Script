@@ -19,7 +19,6 @@ class Character:
         self.weapons = []
 
     def __str__(self):
-        # Build a list of strings to join together.
         character_as_str = [f"Name: {self.char_name}", f"Pronouns: {self.pronouns}", f"Class: {self.char_class}",
                             f"High Score: {self.high_score}",
                             f"Stats: \n\tSTR: {self.stats['STR']} \n\tSPD: {self.stats['SPD']} "
@@ -45,9 +44,7 @@ class Character:
         character_as_str.append(f"Master Skills:")
         for skill in self.master_skills:
             character_as_str.append(f"\t{skill}")
-        # character_as_str.append(f"Trained: {self.trained_skills}")
-        # character_as_str.append(f"Expert: {self.expert_skills}")
-        # character_as_str.append(f"Master: {self.master_skills}")
+
         character_as_str.append(f"Armor Points: {self.armor_points}")
         character_as_str.append(f"Credits: {self.credits}")
         character_as_str.append(f"Equipment: {self.equipment}")

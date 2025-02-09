@@ -1,6 +1,5 @@
 import PyPDF2
 from character_class import Character
-import json
 
 
 def extract_form_values(path):
@@ -17,7 +16,7 @@ def extract_form_values(path):
             if value is not None and value != '/Off':
                 field_values[field_name] = value
 
-        print(field_values)
+        # print(field_values)
         return field_values
 
 
