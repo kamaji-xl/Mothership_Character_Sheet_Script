@@ -25,8 +25,7 @@ class LoadCharacter(ttk.Frame):
         self.select_text = tk.StringVar()
         self.select_text.set(f"Active Collection: {parent.path}")
         self.select_label = ttk.Label(self, textvariable=self.select_text, font=('Fira Code', 15))
-        self.select_label.grid(row=0, column=0, padx=5, pady=(5,0), sticky='ew')
-        # self.select_text.set(f"Active Collection: {self.parent.path}")
+        self.select_label.grid(row=0, column=0, padx=5, pady=(5, 0), sticky='ew')
 
         self.c_names = ['Select Character...']
         self.select_box = ttk.Combobox(self, state="readonly", values=self.c_names, postcommand=self.update_box_list)
@@ -36,7 +35,7 @@ class LoadCharacter(ttk.Frame):
         self.select_box.bind("<<ComboboxSelected>>", self.update_display)
 
         # Character Info
-        self.display = tk.Text(self, width=40, height=40, font=('Fira Code', 10))
+        self.display = tk.Text(self, width=60, height=40, font=('Fira Code', 10))
         self.display.grid(row=2, column=0, columnspan=2, sticky='nsew', padx=5, pady=5)
         self.display.config(state='disabled')
 
@@ -78,7 +77,7 @@ class LoadCharacter(ttk.Frame):
             dict_list.append(character.character_to_dict())
 
         data = json.dumps(dict_list, indent=4)
-        print(data)
+        # print(data)
 
         # path = 'characters.json'
         with open(self.parent.path, 'w') as file:
@@ -100,10 +99,10 @@ class LoadCharacter(ttk.Frame):
             self.select_box.current(len(self.select_box['values']) - 1)
             self.update_display()
 
-            for character in self.parent.characters:
-                print(character)
+            # for character in self.parent.characters:
+            #     print(character)
 
-            print("JSON:")
+            # print("JSON:")
             self.export_to_json()
 
         except FileNotFoundError:

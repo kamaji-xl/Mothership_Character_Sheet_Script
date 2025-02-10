@@ -1,0 +1,11 @@
+[
+    {
+        "name": "Ammo",
+        "cost": "50cr",
+        "range": "N/A",
+        "damage": "N/A",
+        "shots": "N/A",
+        "wound": "N/A",
+        "special": "Per magazine/container."
+    }
+]

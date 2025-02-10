@@ -48,7 +48,9 @@ class Character:
         character_as_str.append(f"Armor Points: {self.armor_points}")
         character_as_str.append(f"Credits: {self.credits}")
         character_as_str.append(f"Equipment: {self.equipment}")
-        character_as_str.append(f"Weapons: {self.weapons}")
+        character_as_str.append(f"Weapons:")
+        for weapon in self.weapons:
+            character_as_str.append(f"{weapon}")
 
         return "\n".join(character_as_str)
 
@@ -98,27 +100,3 @@ class Character:
 
     def character_to_dict(self):
         return self.__dict__
-
-    def print_character(self):
-        print("\nName:", self.char_name)
-        print("Pronouns:", self.pronouns)
-        print("Class:", self.char_class)
-        print("High Score:", self.high_score)
-        print(f"Stats: \n\tSTR: {self.stats['STR']} \n\tSPD: {self.stats['SPD']} "
-              f"\n\tINT: {self.stats['INT']} \n\tCBT: {self.stats['CBT']}")
-        print(f"Saves: \n\tSanity: {self.saves['Sanity']} \n\tFear: {self.saves['Fear']}\n\tBody: {self.saves['Body']}")
-        print(f"Health: \n\t{self.health['Current']} out of {self.health['Max']}")
-        print(f"Wounds: \n\t{self.wounds['Current']} out of {self.wounds['Max']}")
-        print(f"Stress: "
-              f"\n\tCurrent: {self.stress['Current']}"
-              f"\n\tMinimum: {self.stress['Min']}")
-        print(f"Conditions:")
-        for condition in self.conditions:
-            print(f"\t{condition}")
-        print(f"Trained: {self.trained_skills}")
-        print(f"Expert: {self.expert_skills}")
-        print(f"Master: {self.master_skills}")
-        print(f"Armor Points: {self.armor_points}")
-        print(f"Credits: {self.credits}")
-        print(f"Equipment: {self.equipment}")
-        print(f"Weapons: {self.weapons}")

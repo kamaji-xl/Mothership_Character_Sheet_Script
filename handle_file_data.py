@@ -1,5 +1,6 @@
 import PyPDF2
 from character_class import Character
+from constants import *
 
 
 def extract_form_values(path):
@@ -21,14 +22,6 @@ def extract_form_values(path):
 
 
 def parse_character_data(data):
-    trained = ("Linguistics", "Zoology", "Botany", "Geology", "Industrial Equipment", "Jury-Rigging", "Chemistry",
-               "Computers", "Zero-G", "Mathematics", "Art", "Archaeology", "Theology", "Military Training", "Rimwise",
-               "Athletics")
-    expert = ("Psychology", "Pathology", "Field Medicine", "Ecology", "Asteroid Mining", "Mechanical Repair",
-              "Explosives", "Pharmacology", "Hacking", "Piloting", "Physics", "Mysticism", "Wilderness Survival",
-              "Firearms", "Hand-to-Hand Combat")
-    master = ("Sophontology", "Exobiology", "Surgery", "Planetology", "Robotics", "Engineering", "Cybernetics",
-              "Artificial Intelligence", "Hyperspace", "Xenoesotericism", "Command")
     train = []
     exp = []
     mast = []
@@ -59,15 +52,16 @@ def parse_character_data(data):
     new_char.set_stress(data.get("Stress Current", 0), data.get("Stress Minimum", 0))
 
     new_char.set_conditions(data.get("Conditions", "None"))
-    for skill in trained:
+
+    for skill in TRAINED:
         if data.get(skill):
             train.append(skill)
 
-    for skill in expert:
+    for skill in EXPERT:
         if data.get(skill):
             exp.append(skill)
 
-    for skill in master:
+    for skill in MASTER:
         if data.get(skill):
             mast.append(skill)
 
