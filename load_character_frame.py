@@ -1,8 +1,10 @@
+import os
 import tkinter as tk
 import json
 from tkinter import ttk
 from tkinter import filedialog
 import handle_file_data as pdf
+from character_class import Character
 
 
 class LoadCharacter(ttk.Frame):
@@ -107,6 +109,28 @@ class LoadCharacter(ttk.Frame):
 
         except FileNotFoundError:
             pass
+
+    def load_from_json(self, new_path=''):
+        if os.path.exists(new_path):
+            self.parent.path = new_path
+
+        self.parent.characters.clear()
+
+        with open(self.parent.path, 'r') as file:
+            json_data = json.loads(file.read())
+            file.close()
+
+        # print(json_data)
+        # print(len(json_data))
+
+        for json_char in json_data:
+            new_char = Character()
+            for key, value in json_char.items():
+                setattr(new_char, key, value)
+            # print(new_char)
+            self.parent.characters.append(new_char)
+
+        print(f'Loaded {len(self.parent.characters)} characters from {os.path.basename(self.parent.path)}')
 
     def update_box_list(self):
         updated_clist = ['Select Character...']

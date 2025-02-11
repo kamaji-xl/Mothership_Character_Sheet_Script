@@ -47,7 +47,8 @@ class Character:
 
         character_as_str.append(f"Armor Points: {self.armor_points}")
         character_as_str.append(f"Credits: {self.credits}")
-        character_as_str.append(f"Equipment: {self.equipment}")
+        # character_as_str.append(f"Equipment: {self.equipment}")
+        character_as_str.append(f"Equipment: ")
         character_as_str.append(f"Weapons:")
         for weapon in self.weapons:
             character_as_str.append(f"{weapon}")

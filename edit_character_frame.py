@@ -99,6 +99,7 @@ class EditCharacter(tk.Toplevel):
 
         self.destroy()
         self.parent.load_frame.update_box_list()
+        self.parent.load_frame.select_box.current(0)
         self.parent.load_frame.update_display()
         print(f"Changes successfully applied to {sel.char_name}")
 

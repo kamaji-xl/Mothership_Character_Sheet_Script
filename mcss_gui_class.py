@@ -36,13 +36,13 @@ class McssGui(tk.Tk):
 
         self.path = 'characters.json'
 
-        # Initialize list of Characters and load data from characters.json
-        self.characters = []
-        self.load_from_json(self.path)
-
         # Load Frame
         self.load_frame = LoadCharacter(self)
         self.load_frame.grid(row=0, column=0)
+
+        # Initialize list of Characters and load data from characters.json
+        self.characters = []
+        self.load_frame.load_from_json(self.path)
 
         # Menu bar
         self.menubar = tk.Menu(self)
@@ -71,8 +71,9 @@ class McssGui(tk.Tk):
 
     def choose_json(self):
         try:
-            path = filedialog.askopenfilename(title='Choose a JSON file')
-            self.load_from_json(path)
+            path = filedialog.askopenfilename(title='Choose a JSON file',
+                                              filetypes=[('JSON', '*.json')])
+            self.load_frame.load_from_json(path)
             self.load_frame.select_text.set(f"Active Collection: {os.path.basename(self.path)}")
             self.load_frame.select_box.current(0)
             self.load_frame.update_display()
@@ -108,10 +109,16 @@ class McssGui(tk.Tk):
                 self.help_text = None
         self.help_text = tk.Toplevel(self)
         self.help_text.title('Help')
-        self.help_text.geometry('630x275')
+        self.help_text.geometry('850x400')
         self.help_text.resizable(False, False)
-        help_label = ttk.Label(self.help_text, text="File Menu:\n\t"
-                                                    "Save -> Save current character edit.\n\t"
+        help_label = ttk.Label(self.help_text, text="Welcome to the Mothership interactive character sheet!\n\n"
+                                                    "This program imports character sheet data from official "
+                                                    "Mothership PDFs. \n\nImported characters are then saved as JSON"
+                                                    "and are loaded automatically the next time you boot the "
+                                                    "program.\n\n"
+                                                    "File Menu:\n\t"
+                                                    "Save -> Save current character edit to active character "
+                                                    "collection.\n\t"
                                                     "Save As -> Save current current character collection "
                                                     "as a new JSON file.\n\t"
                                                     "Exit -> Close program.\n\n"
@@ -131,10 +138,10 @@ class McssGui(tk.Tk):
             file.close()
 
         for json_wpn in json_data:
-            print(json_wpn)
+            # print(json_wpn)
             new_wpn = Weapon()
             for (key, value) in json_wpn.items():
-                print(key, value)
+                # print(key, value)
                 setattr(new_wpn, key, value)
 
             self.weapon_library.append(new_wpn)
@@ -143,27 +150,27 @@ class McssGui(tk.Tk):
         #     print(wpn, '\n')
         print(f'Loaded {len(self.weapon_library)} weapons from {os.path.basename(wpn_path)}')
 
-    def load_from_json(self, new_path=''):
-        if os.path.exists(new_path):
-            self.path = new_path
-
-        self.characters.clear()
-
-        with open(self.path, 'r') as file:
-            json_data = json.loads(file.read())
-            file.close()
-
-        # print(json_data)
-        # print(len(json_data))
-
-        for json_char in json_data:
-            new_char = Character()
-            for key, value in json_char.items():
-                setattr(new_char, key, value)
-            # print(new_char)
-            self.characters.append(new_char)
-
-        print(f'Loaded {len(self.characters)} characters from {os.path.basename(self.path)}')
+    # def load_from_json(self, new_path=''):
+    #     if os.path.exists(new_path):
+    #         self.path = new_path
+    #
+    #     self.characters.clear()
+    #
+    #     with open(self.path, 'r') as file:
+    #         json_data = json.loads(file.read())
+    #         file.close()
+    #
+    #     # print(json_data)
+    #     # print(len(json_data))
+    #
+    #     for json_char in json_data:
+    #         new_char = Character()
+    #         for key, value in json_char.items():
+    #             setattr(new_char, key, value)
+    #         # print(new_char)
+    #         self.characters.append(new_char)
+    #
+    #     print(f'Loaded {len(self.characters)} characters from {os.path.basename(self.path)}')
 
     def save_as(self):
         path = filedialog.asksaveasfilename(initialfile='character_list.json', defaultextension='*.json',
