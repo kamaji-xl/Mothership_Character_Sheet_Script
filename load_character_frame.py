@@ -19,9 +19,10 @@ class LoadCharacter(ttk.Frame):
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=1)
         self.columnconfigure(2, weight=1)
-        self.rowconfigure(0, weight=0)
-        self.rowconfigure(1, weight=0)
-        self.rowconfigure(2, weight=1)
+        self.rowconfigure(0, weight=1)
+        # self.rowconfigure(1, weight=1)
+        # self.rowconfigure(1, weight=0)
+        # self.rowconfigure(2, weight=1)
 
         # Character select
         self.select_text = tk.StringVar()
@@ -38,7 +39,7 @@ class LoadCharacter(ttk.Frame):
 
         # Character Info
         self.display = tk.Text(self, width=60, height=40, font=('Fira Code', 10))
-        self.display.grid(row=2, column=0, columnspan=2, sticky='nsew', padx=5, pady=5)
+        # self.display.grid(row=2, column=0, columnspan=2, sticky='nsew', padx=5, pady=5)
         self.display.config(state='disabled')
 
     def cache_warning(self):
@@ -153,8 +154,12 @@ class LoadCharacter(ttk.Frame):
 
             self.display.delete('1.0', tk.END)
             self.display.insert(tk.END, selection)
+            parent.action_frame.update_options(selection)
+            parent.stat_frame.get_rolls()
 
         else:
             self.display.delete('1.0', tk.END)
+            parent.action_frame.update_options(None)
+            parent.stat_frame.get_rolls()
 
         self.display.config(state='disabled')  # Lock display

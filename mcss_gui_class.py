@@ -3,7 +3,10 @@ import tkinter as tk
 from tkinter import ttk
 import json
 from tkinter import filedialog
+
+from action_frame import ActionFrame
 from character_class import Character
+from stat_frame import StatFrame
 from weapons_class import Weapon
 from load_character_frame import LoadCharacter
 from edit_character_frame import EditCharacter
@@ -20,7 +23,7 @@ class McssGui(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title('Mothership - Interactive Character Sheet')
-        self.geometry('500x800')
+        self.geometry('1100x600')
         self.edit_window = None
         self.no_selection = None
         self.help_text = None
@@ -30,6 +33,8 @@ class McssGui(tk.Tk):
         self.load_weapon_library('weapons.json')
 
         self.columnconfigure(0, weight=1)
+        self.columnconfigure(1, weight=1)
+        self.columnconfigure(2, weight=1)
 
         self.rowconfigure(0, weight=1)
         self.rowconfigure(1, weight=1)
@@ -38,7 +43,7 @@ class McssGui(tk.Tk):
 
         # Load Frame
         self.load_frame = LoadCharacter(self)
-        self.load_frame.grid(row=0, column=0)
+        self.load_frame.grid(row=0, column=0, sticky='nw')
 
         # Initialize list of Characters and load data from characters.json
         self.characters = []
@@ -68,6 +73,18 @@ class McssGui(tk.Tk):
         # Menubar - Help Options
         self.menubar.add_cascade(label='Help', menu=self.help_menu)
         self.help_menu.add_command(label='View Help', command=self.help)
+
+        # Action Frame
+        self.action_frame = ActionFrame(self)
+        self.action_frame.grid(row=1, column=0, sticky='nw')
+
+        # Separator
+        self.sepv1 = ttk.Separator(self, orient="vertical")
+        self.sepv1.grid(column=1, row=0, rowspan=3, pady=5, sticky="nsew")
+
+        # Stat Frame
+        self.stat_frame = StatFrame(self)
+        self.stat_frame.grid(row=0, column=2, sticky='nw', rowspan=2)
 
     def choose_json(self):
         try:
@@ -149,28 +166,6 @@ class McssGui(tk.Tk):
         # for wpn in self.weapon_library:
         #     print(wpn, '\n')
         print(f'Loaded {len(self.weapon_library)} weapons from {os.path.basename(wpn_path)}')
-
-    # def load_from_json(self, new_path=''):
-    #     if os.path.exists(new_path):
-    #         self.path = new_path
-    #
-    #     self.characters.clear()
-    #
-    #     with open(self.path, 'r') as file:
-    #         json_data = json.loads(file.read())
-    #         file.close()
-    #
-    #     # print(json_data)
-    #     # print(len(json_data))
-    #
-    #     for json_char in json_data:
-    #         new_char = Character()
-    #         for key, value in json_char.items():
-    #             setattr(new_char, key, value)
-    #         # print(new_char)
-    #         self.characters.append(new_char)
-    #
-    #     print(f'Loaded {len(self.characters)} characters from {os.path.basename(self.path)}')
 
     def save_as(self):
         path = filedialog.asksaveasfilename(initialfile='character_list.json', defaultextension='*.json',

@@ -4,6 +4,11 @@ PROS = 'pronouns'
 CLASS = 'char_class'
 SCORE = 'high_score'
 
+NAME_LBL = 'Name'
+PROS_LBL = 'Pronouns'
+CLASS_LBL = 'Class'
+SCORE_LBL = 'High Score'
+
 # Stats
 STR = "STR"
 SPD = "SPD"
@@ -31,9 +36,12 @@ CRED = "credits"
 # Font
 FC = "Fira Code"
 FC_13B = ('Fira Code', 13, 'bold')
+FC_15B = ('Fira Code', 15, 'bold')
+
+# Padding
+PAD_FOUR = '    '
 
 # Skills
-
 TRAINED = ("Linguistics", "Zoology", "Botany", "Geology",
            "Industrial Equipment", "Jury-Rigging", "Chemistry",
            "Computers", "Zero-G", "Mathematics", "Art", "Archaeology",
@@ -49,3 +57,8 @@ MASTER = ("Sophontology", "Exobiology", "Surgery", "Planetology",
           "Robotics", "Engineering", "Cybernetics",
           "Artificial Intelligence", "Hyperspace", "Xenoesotericism",
           "Command")
+
+ZERO = 0
+
+PYHEDRAL_PORT = 5555
+HGM_PORT = 5500

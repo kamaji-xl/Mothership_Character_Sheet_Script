@@ -17,6 +17,7 @@ class Character:
         self.armor_points = 0
         self.credits = 0
         self.weapons = []
+        # self.rolls = {"STR": 0, "SPD": 0, "INT": 0, "CBT": 0, "Sanity": 0, "Fear": 0, "Body": 0}
 
     def __str__(self):
         character_as_str = [f"Name: {self.char_name}", f"Pronouns: {self.pronouns}", f"Class: {self.char_class}",
