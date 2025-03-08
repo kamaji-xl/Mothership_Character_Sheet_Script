@@ -5,6 +5,7 @@ from tkinter import ttk
 from tkinter import filedialog
 import handle_file_data as pdf
 from character_class import Character
+from weapons_class import Weapon
 
 
 class LoadCharacter(ttk.Frame):
@@ -87,6 +88,9 @@ class LoadCharacter(ttk.Frame):
             file.write(data)
             file.close()
 
+        print(f"Characters saved to {self.parent.path}")
+        self.load_from_json(self.parent.path)
+
     def import_pdf(self):
         """
         Open file explorer to select a PDF file and import character data from PDF file,
@@ -127,8 +131,12 @@ class LoadCharacter(ttk.Frame):
         for json_char in json_data:
             new_char = Character()
             for key, value in json_char.items():
-                setattr(new_char, key, value)
-            # print(new_char)
+                if key == 'weapons':
+                    for w in value:
+                        new_wpn = Weapon(w['name'], w['cost'], w['range'], w['shots'], w['wound'], w['special'])
+                        new_char.weapons.append(new_wpn)
+                else:
+                    setattr(new_char, key, value)
             self.parent.characters.append(new_char)
 
         print(f'Loaded {len(self.parent.characters)} characters from {os.path.basename(self.parent.path)}')
@@ -147,6 +155,8 @@ class LoadCharacter(ttk.Frame):
         self.display.config(state='normal')  # Unlock display
 
         if selection != 'Select Character...':
+
+            print(f"{selection} selected...")
             for i, x in enumerate(parent.characters):
                 if x.char_name == selection:
                     selection = self.parent.characters[i]
@@ -155,6 +165,7 @@ class LoadCharacter(ttk.Frame):
             self.display.delete('1.0', tk.END)
             self.display.insert(tk.END, selection)
             parent.action_frame.update_options(selection)
+            parent.inv_frame.update_item_info()
             parent.stat_frame.get_rolls()
 
         else:

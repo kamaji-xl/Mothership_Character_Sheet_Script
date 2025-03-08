@@ -10,6 +10,7 @@ from stat_frame import StatFrame
 from weapons_class import Weapon
 from load_character_frame import LoadCharacter
 from edit_character_frame import EditCharacter
+from item_frame import ItemFrame
 from constants import *
 
 
@@ -23,7 +24,7 @@ class McssGui(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title('Mothership - Interactive Character Sheet')
-        self.geometry('1100x600')
+        self.geometry('1800x800')
         self.edit_window = None
         self.no_selection = None
         self.help_text = None
@@ -35,6 +36,9 @@ class McssGui(tk.Tk):
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=1)
         self.columnconfigure(2, weight=1)
+        self.columnconfigure(3, weight=1)
+        self.columnconfigure(4, weight=2)
+        self.columnconfigure(5, weight=1)
 
         self.rowconfigure(0, weight=1)
         self.rowconfigure(1, weight=1)
@@ -76,15 +80,23 @@ class McssGui(tk.Tk):
 
         # Action Frame
         self.action_frame = ActionFrame(self)
-        self.action_frame.grid(row=1, column=0, sticky='nw')
+        self.action_frame.grid(row=1, column=0, sticky='nsew')
 
-        # Separator
-        self.sepv1 = ttk.Separator(self, orient="vertical")
-        self.sepv1.grid(column=1, row=0, rowspan=3, pady=5, sticky="nsew")
+        # Separator 1
+        self.sepV1 = ttk.Separator(self, orient="vertical")
+        self.sepV1.grid(column=1, row=0, rowspan=3, pady=5, sticky="nsew")
 
         # Stat Frame
         self.stat_frame = StatFrame(self)
         self.stat_frame.grid(row=0, column=2, sticky='nw', rowspan=2)
+
+        # Separator
+        self.sepV2 = ttk.Separator(self, orient="vertical")
+        self.sepV2.grid(column=3, row=0, rowspan=3, pady=5, sticky="nsew")
+
+        # Item Frame
+        self.inv_frame = ItemFrame(self)
+        self.inv_frame.grid(row=0, column=4, sticky='nw', rowspan=2)
 
     def choose_json(self):
         try:

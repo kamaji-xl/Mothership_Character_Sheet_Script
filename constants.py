@@ -30,6 +30,8 @@ CURRENT = "Current"
 MAX = "Max"
 MIN = "Min"
 
+CONDITIONS = "Conditions"
+CONDITIONS_ATT = "conditions"
 AP = "armor_points"
 CRED = "credits"
 
@@ -62,3 +64,4 @@ ZERO = 0
 
 PYHEDRAL_PORT = 5555
 HGM_PORT = 5500
+MERC_PORT = 6700

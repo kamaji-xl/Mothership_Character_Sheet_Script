@@ -1,3 +1,6 @@
+import json
+
+
 class Character:
     def __init__(self):
         self.char_name = ""
@@ -52,7 +55,7 @@ class Character:
         character_as_str.append(f"Equipment: ")
         character_as_str.append(f"Weapons:")
         for weapon in self.weapons:
-            character_as_str.append(f"{weapon}")
+            character_as_str.append(f"{weapon}\n")
 
         return "\n".join(character_as_str)
 
@@ -101,4 +104,10 @@ class Character:
         self.credits = new_credits
 
     def character_to_dict(self):
+        weapons_list = []
+        for weapon in self.weapons:
+            weapons_list.append(weapon.weapon_to_dict())
+
+        self.weapons = weapons_list
+
         return self.__dict__

@@ -118,6 +118,7 @@ class EditCharacter(tk.Toplevel):
         selection = parent.load_frame.select_box.get()
 
         if selection != 'Select Character...':
+            print(f"Now editing {selection}...")
             for i, x in enumerate(parent.characters):
                 if x.char_name == selection:
                     selection = parent.characters[i]
@@ -150,7 +151,7 @@ class EditDetailsFrame(ttk.LabelFrame):
 
         for i, field in enumerate(fields):
 
-            print(getattr(sel, field))
+            # print(getattr(sel, field))
             detail_label = ttk.Label(self, text=f"{labels[i]}", font=FC_13B)
             detail_label.grid(row=0, column=i * 2, sticky='ew')
 
@@ -342,6 +343,8 @@ class EditWeapons(ttk.LabelFrame):
         self.inv_label = ttk.Label(self, text='Character Inventory:', font=FC_13B)
         self.inv_label.grid(row=0, column=0, sticky='w')
         self.wpn_inv_names = ['Select Weapon...']
+        for weapon in self.parent.selection.weapons:
+            print(f"{weapon}\n")
         for weapon in self.parent.selection.weapons:
             self.wpn_inv_names.append(weapon.name)
 
