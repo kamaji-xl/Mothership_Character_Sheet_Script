@@ -3,9 +3,7 @@ import tkinter as tk
 from tkinter import ttk
 import json
 from tkinter import filedialog
-
 from action_frame import ActionFrame
-from character_class import Character
 from stat_frame import StatFrame
 from weapons_class import Weapon
 from load_character_frame import LoadCharacter
@@ -24,7 +22,7 @@ class McssGui(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title('Mothership - Interactive Character Sheet')
-        self.geometry('1800x800')
+        self.geometry('2300x800')
         self.edit_window = None
         self.no_selection = None
         self.help_text = None
@@ -34,11 +32,11 @@ class McssGui(tk.Tk):
         self.load_weapon_library('weapons.json')
 
         self.columnconfigure(0, weight=1)
-        self.columnconfigure(1, weight=1)
-        self.columnconfigure(2, weight=1)
-        self.columnconfigure(3, weight=1)
+        self.columnconfigure(1, weight=2)
+        self.columnconfigure(2, weight=2)
+        self.columnconfigure(3, weight=2)
         self.columnconfigure(4, weight=2)
-        self.columnconfigure(5, weight=1)
+        # self.columnconfigure(5, weight=1)
 
         self.rowconfigure(0, weight=1)
         self.rowconfigure(1, weight=1)
@@ -88,7 +86,7 @@ class McssGui(tk.Tk):
 
         # Stat Frame
         self.stat_frame = StatFrame(self)
-        self.stat_frame.grid(row=0, column=2, sticky='nw', rowspan=2)
+        self.stat_frame.grid(row=0, column=2, sticky='nsew', padx=10, rowspan=2)
 
         # Separator
         self.sepV2 = ttk.Separator(self, orient="vertical")
@@ -96,7 +94,7 @@ class McssGui(tk.Tk):
 
         # Item Frame
         self.inv_frame = ItemFrame(self)
-        self.inv_frame.grid(row=0, column=4, sticky='nw', rowspan=2)
+        self.inv_frame.grid(row=0, column=4, sticky='nsew', rowspan=2)
 
     def choose_json(self):
         try:

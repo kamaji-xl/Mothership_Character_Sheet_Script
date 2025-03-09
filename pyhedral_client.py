@@ -21,14 +21,14 @@ def get_char_stats(name, roll_type):
     return response["stats"]
 
 
-def make_roll(count, sides, name, roll_type, mod=0):
+def make_roll(count, sides, name, roll_type, target=0):
     request_json = {
         "command": "roll",
         "count": count,
         "sides": sides,
         "name": name,
         "type": roll_type,
-        "mod": mod
+        "target": target
     }
 
     response = send_and_recv(request_json)
@@ -44,10 +44,4 @@ def send_and_recv(req):
 
 
 if __name__ == "__main__":
-    master_socket = socket_stuff()
-    # context = zmq.Context()
-    # socket = context.socket(zmq.REQ)
-    # socket.connect("tcp://localhost:5555")
-
-    # make_roll(5, 100, "test", "str", 0)
-    # get_char_stats("test", "str")
+    master_socket = socket_stuff(PYHEDRAL_PORT)

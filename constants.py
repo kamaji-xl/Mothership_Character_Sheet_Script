@@ -36,7 +36,8 @@ AP = "armor_points"
 CRED = "credits"
 
 # Font
-FC = "Fira Code"
+FC = ('Fira Code', 11)
+FC_10B = ('Fira Code', 10, 'bold')
 FC_13B = ('Fira Code', 13, 'bold')
 FC_15B = ('Fira Code', 15, 'bold')
 
@@ -65,3 +66,4 @@ ZERO = 0
 PYHEDRAL_PORT = 5555
 HGM_PORT = 5500
 MERC_PORT = 6700
+STAT_PORT = 5252

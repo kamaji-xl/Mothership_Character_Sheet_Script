@@ -40,14 +40,14 @@ class EditCharacter(tk.Toplevel):
         self.skill_frame.grid(row=0, rowspan=4, column=4, columnspan=4, padx=10, pady=(0, 10), sticky='nsew')
 
         # Weapons Frame
-        self.weapons_frame = EditWeapons(self, 'Weapons')
-        self.weapons_frame.grid(row=2, column=0, rowspan=2, columnspan=4, padx=10, pady=(0, 10), sticky='nsew')
+        # self.weapons_frame = EditWeapons(self, 'Weapons')
+        # self.weapons_frame.grid(row=2, column=0, rowspan=2, columnspan=4, padx=10, pady=(0, 10), sticky='nsew')
 
         # Buttons
         self.confirm_btn = ttk.Button(self, text='Apply', command=self.apply_changes)
-        self.confirm_btn.grid(row=4, column=6, padx=2, pady=2, sticky='nsew')
+        self.confirm_btn.grid(row=4, column=1, padx=10, pady=2, sticky='new')
         self.cancel_btn = ttk.Button(self, text='Cancel', command=self.destroy)
-        self.cancel_btn.grid(row=4, column=5, padx=2, pady=2, sticky='nsew')
+        self.cancel_btn.grid(row=4, column=0, padx=10, pady=2, sticky='new')
 
     def apply_changes(self):
         sel = self.selection
@@ -322,7 +322,8 @@ class EditStatus(ttk.LabelFrame):
         label = ttk.Label(self, text=f'Credits:', font=FC_13B)
         label.grid(row=4, column=0, sticky='w')
 
-        spin_box = Spin(self)
+        # spin_box = Spin(self)
+        spin_box = ttk.Spinbox(self, from_=0, to=1000000, font=FC)
         spin_box.set(getattr(sel, CRED))
         spin_box.grid(row=4, column=1, padx=2, sticky='w')
         parent.status_spinboxes[CRED] = spin_box

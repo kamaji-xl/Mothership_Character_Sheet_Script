@@ -133,7 +133,8 @@ class LoadCharacter(ttk.Frame):
             for key, value in json_char.items():
                 if key == 'weapons':
                     for w in value:
-                        new_wpn = Weapon(w['name'], w['cost'], w['range'], w['shots'], w['wound'], w['special'])
+                        new_wpn = Weapon(w['name'], w['cost'], w['range'], w['shots'],
+                                         w['wound'], w['special'], w['qty'])
                         new_char.weapons.append(new_wpn)
                 else:
                     setattr(new_char, key, value)
@@ -167,6 +168,7 @@ class LoadCharacter(ttk.Frame):
             parent.action_frame.update_options(selection)
             parent.inv_frame.update_item_info()
             parent.stat_frame.get_rolls()
+            parent.inv_frame.t_frame.get_history()
 
         else:
             self.display.delete('1.0', tk.END)

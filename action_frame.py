@@ -122,13 +122,13 @@ class ActionFrame(ttk.Frame):
         self.roll_label.config(text=f"Roll Calculation:\n"
                                     f"\t     ({base_value}) {roll_type}\n"
                                     f"\t+   ({skill_mod}) {skill}\n"
-                                    f"\t<= ({total}) Needed",
+                                    f"\t<   ({total}) Needed",
                                font=FC_15B)
 
     def grid_config(self, rows, columns):
         for i in range(columns):
+            # self.columnconfigure(i, weight=1, uniform="col")
             self.columnconfigure(i, weight=1, uniform="col")
-
         for j in range(rows):
             self.rowconfigure(j, weight=1, uniform="row")
 
@@ -151,9 +151,9 @@ class ActionFrame(ttk.Frame):
             status = "Fail"
             color = "red"
 
-            roll = make_roll(1, 100, self.selection.char_name, self.roll_type.lower(), self.roll_mod)
+            roll = make_roll(1, 100, self.selection.char_name, self.roll_type.lower(), self.target)
 
-            if roll[0] <= self.target:
+            if roll[0] < self.target:
                 status = "Pass"
                 color = "green"
 
