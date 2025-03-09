@@ -2,12 +2,23 @@
 
 MCSS is an interactive character sheet for the Mothership TTRPG.
 
-## Planned Features:
-- Load character data from official PDFs
-- Make rolls and automatically apply relevant modifiers
-- Send roll data to discord to discord channels
-- Track and modify stats, hp, etc
+## Features:
+- Import and extract character data from Mothership PDFs.
+- Store extracted character data in JSON.
+- Automatically load JSON on launch.
+- Save collections of characters as specific JSON files.
+- Edit character data.
+- Implemented tkinter GUI.
+- Load weapon library from JSON on launch.
+- Clear saved character collections.
+- Complete transactions and view transaction history with mothership_mercantile server. 
+- Make Stat/Save Checks with pyhedral server.
+- Calculate roll statistics with mcss_stats server.
+- Graph generation microservice by @Cody-learns.
 
-## In Progress:
-- Currently working on extracting character data from official PDFs/JSON,
-  and saving data as JSON files. 
+## Planned Features:
+- Add equipment support. 
+- Consolidate microservices into a singular Warden server.
+- Switch GUI to pyQT.
+- Add missing game mechanics. (i.e. advantage/disadvantage, panic rolls, damage rolls, custom rolls, potentially 
+discord integration.)
