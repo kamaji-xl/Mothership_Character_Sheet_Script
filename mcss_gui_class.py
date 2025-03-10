@@ -21,7 +21,7 @@ class McssGui(tk.Tk):
 
     def __init__(self):
         super().__init__()
-        self.title('Mothership - Interactive Character Sheet')
+        self.title('MCSS')
         self.geometry('2300x800')
         self.edit_window = None
         self.no_selection = None

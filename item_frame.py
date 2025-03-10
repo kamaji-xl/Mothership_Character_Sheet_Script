@@ -38,10 +38,10 @@ class ItemFrame(ttk.Frame):
             self.rowconfigure(i, weight=1)
         for j in range(20):
             self.columnconfigure(j, weight=1)
+
         self.row = self.make_inv_box()
-        print(self.row)
         self.sep1 = ttk.Separator(self, orient="horizontal")
-        self.sep1.grid(column=0, row=self.row, padx=5, columnspan=10, pady=5, sticky="nsew")
+        self.sep1.grid(column=0, row=self.row, padx=5, columnspan=20, pady=5, sticky="nsew")
         self.row += 1
 
         # Transaction Radio Buttons
@@ -62,7 +62,7 @@ class ItemFrame(ttk.Frame):
         self.row = self.make_transaction_box(self.row)
 
         self.sep2 = ttk.Separator(self, orient="horizontal")
-        self.sep2.grid(column=0, row=self.row, padx=5, columnspan=10, pady=5, sticky="nsew")
+        self.sep2.grid(column=0, row=self.row, padx=5, columnspan=20, pady=5, sticky="nsew")
         self.row += 1
 
         # Transaction History
@@ -72,15 +72,6 @@ class ItemFrame(ttk.Frame):
 
         self.t_frame = TransactionFrame(self)
         self.t_frame.grid(column=0, row=self.row, columnspan=15, padx=5, pady=5, sticky="nsew")
-        print(self.row)
-
-    # def complete_purchase(self):
-    #     if self.transaction_var.get() == "buy":
-    #         self.purchase()
-    #     elif self.transaction_var.get() == "sell":
-    #         pass
-    #     else:
-    #         print("Error: Must select buy or sell.")
 
     def make_inv_box(self):
         row = 0
@@ -162,7 +153,7 @@ class ItemFrame(ttk.Frame):
         request_json = self.build_request()
         if request_json:
             sel = self.af.selection
-            print("Sending Request:")
+            print("Sending request to mcss_mercantile server:")
             for key, value in request_json.items():
                 print(f"\t{key}: {value}")
 
@@ -170,9 +161,12 @@ class ItemFrame(ttk.Frame):
             socket.send_json(request_json)
             response = socket.recv_json()
 
-            print("\nReceived Response:")
+            print(f"\nReceived response from mcss_mercantile server:")
             for key, value in response.items():
-                print(f"\t{key}: {value}")
+                if key == 'transactions':
+                    print(f'\ttransactions: {len(value)} transaction(s)')
+                else:
+                    print(f"\t{key}: {value}")
             self.handle_transaction_response(sel, response)
         self.t_frame.get_history()
 
@@ -277,19 +271,23 @@ class TransactionFrame(ttk.Frame):
         req = self.build_t_req()
 
         socket = socket_stuff(MERC_PORT)
-        print("\nSending Request:")
+        print("\nSending request to mcss_mercantile server:")
         for key, value in req.items():
             print(f"\t{key}: {value}")
 
         socket.send_json(req)
         response = socket.recv_json()
 
-        print("\nReceived Response:")
-        print(f"\tstatus: {response['status']}\n\ttransactions:\n")
+        print("\nReceived response from mcss_mercantile server:")
+        if response.get("status") != "success":
+            for key, value in response.items():
+                print(f"\t{key}: {value}")
+        else:
+            print(f"\tstatus: {response['status']}\n\ttransactions: {len(response['transactions'])}")
         self.clear_tree()
         if response.get('transactions', None):
             for transaction in response['transactions']:
-                print(f"\t{transaction}")
+                # print(f"\t{transaction}")
                 self.tree.insert('', 'end', values=transaction)
 
     def make_tree(self):

@@ -16,8 +16,16 @@ def get_char_stats(name, roll_type):
         "name": name,
         "type": roll_type
     }
-
+    print("\nSending request to the Pyhedral server:")
+    for key, value in request_json.items():
+        print(f"\t{key}: {value}")
     response = send_and_recv(request_json)
+    print(f"\nReceived response from the Pyhedral server:")
+    for key, value in response.items():
+        if key == "stats":
+            print(f"\t{key}: {len(value)}")
+        else:
+            print(f"\t{key}: {value}")
     return response["stats"]
 
 

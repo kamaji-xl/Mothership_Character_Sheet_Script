@@ -64,7 +64,10 @@ class ActionFrame(ttk.Frame):
         self.sep3.grid(column=0, row=self.sep3_row, columnspan=6, pady=5, sticky="nsew")
 
         # Roll Block
-        self.roll_label = ttk.Label(self, text=f"Roll Calculation:", font=FC_15B)
+        self.roll_label = ttk.Label(self, text=f"Roll Calculation:\n"
+                                    f"\t     (0) None\n"
+                                    f"\t+   (0) None\n"
+                                    f"\t<   (N/A)", font=FC_15B)
         self.roll_label.grid(column=0, row=self.sep3_row+1, columnspan=3, padx=5, pady=5, sticky="ew")
 
         self.results_label = ttk.Label(self, text=f"Results:", font=FC_15B)

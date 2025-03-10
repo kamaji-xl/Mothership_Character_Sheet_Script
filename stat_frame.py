@@ -16,6 +16,7 @@ class StatFrame(ttk.Frame):
         self.stat_box_lbl = None
         self.choices = ['all']
         self.choices = self.choices + self.af.stats + self.af.saves
+        self.rolls_label = ttk.Label(self, text='No rolls to analyze:', font=FC_15B)
         self.pass_label = ttk.Label(self, text='Pass %:', font=FC_15B)
         self.fail_label = ttk.Label(self, text='Fail %:', font=FC_15B)
         self.avg_label = ttk.Label(self, text='Roll Avg:', font=FC_15B)
@@ -23,7 +24,7 @@ class StatFrame(ttk.Frame):
         self.fail_val_label = ttk.Label(self, text='None', font=FC)
         self.avg_val_label = ttk.Label(self, text='None', font=FC)
 
-        for i in range(10):
+        for i in range(11):
             self.rowconfigure(i, weight=1)
         for j in range(10):
             self.columnconfigure(j, weight=1)
@@ -39,12 +40,13 @@ class StatFrame(ttk.Frame):
         self.stat_box.current(0)
         self.get_rolls()
 
-        self.pass_label.grid(row=7, column=0, padx=5, pady=(5, 0), sticky='nw')
-        self.pass_val_label.grid(row=7, column=1, padx=5, pady=(5, 0), sticky='nw')
-        self.fail_label.grid(row=8, column=0, padx=5, pady=(5, 0), sticky='nw')
-        self.fail_val_label.grid(row=8, column=1, padx=5, pady=(5, 0), sticky='nw')
-        self.avg_label.grid(row=9, column=0, padx=5, pady=(5, 0), sticky='nw')
-        self.avg_val_label.grid(row=9, column=1, padx=5, pady=(5, 0), sticky='nw')
+        self.rolls_label.grid(row=7, column=0, padx=5, pady=(5, 0), sticky='nw')
+        self.avg_label.grid(row=8, column=0, padx=5, pady=(5, 0), sticky='nw')
+        self.avg_val_label.grid(row=8, column=1, padx=5, pady=(5, 0), sticky='nw')
+        self.pass_label.grid(row=9, column=0, padx=5, pady=(5, 0), sticky='nw')
+        self.pass_val_label.grid(row=9, column=1, padx=5, pady=(5, 0), sticky='nw')
+        self.fail_label.grid(row=10, column=0, padx=5, pady=(5, 0), sticky='nw')
+        self.fail_val_label.grid(row=10, column=1, padx=5, pady=(5, 0), sticky='nw')
 
     def get_rolls(self, event=None):
         choice = self.stat_box.get()
@@ -74,21 +76,50 @@ class StatFrame(ttk.Frame):
             "command": "calculate",
             "data": rolls,
         }
+        roll_num = 0
+        roll_type = self.stat_box.get()
         socket = socket_stuff(STAT_PORT)
+        print("\nSending request to mcss_stats server:")
+        for key, value in request.items():
+            if key == 'data':
+                roll_num = len(value)
+                print(f"\t{key}: {len(value)} rolls!")
+            else:
+                print(f"\t{key}: {value}")
         socket.send_json(request)
 
         response = socket.recv_json()
+        print(f"\nReceived response from mcss_stats server:")
+        for key, value in response.items():
+            print(f"\t{key}: {value}")
 
         if response['status'] == 'success':
-            self.avg_val_label.config(text=response['avg_roll'])
-            self.pass_val_label.config(text=response['pass_percent'])
-            self.fail_val_label.config(text=response['fail_percent'])
+            if roll_type == 'all':
+                self.rolls_label.config(text=f"Based on all {roll_num} rolls:")
+            else:
+                self.rolls_label.config(text=f"Based on {roll_num} {roll_type} rolls:")
+
+            self.avg_val_label.config(text=f"{response['avg_roll']}")
+            self.pass_val_label.config(text=f"{response['pass_percent']}%")
+            self.fail_val_label.config(text=f"{response['fail_percent']}%")
+        else:
+            self.rolls_label.config(text=f"No rolls to analyze:")
+            self.avg_val_label.config(text="None")
+            self.pass_val_label.config(text="None")
+            self.fail_val_label.config(text="None")
 
     def histogram_request(self, request):
         socket = socket_stuff(HGM_PORT)
         socket.send_json(request)
+        print("\nSending request to Microservice A:")
+        for key, value in request.items():
+            if key == 'data':
+                print(f'\t{key}: {len(value)} rolls to graph!')
+            else:
+                print(f'\t{key}: {value}')
 
         response = socket.recv()
+        print("\nReceived response from Microservice A...")
 
         with open("hist.png", "wb") as f:
             f.write(response)
